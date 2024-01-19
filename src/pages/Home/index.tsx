@@ -3,6 +3,7 @@ import { BsSearch } from 'react-icons/bs';
 import { GitHub } from '../../components/github';
 import { useState, KeyboardEvent } from 'react';
 import { User } from '../../types/User';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const [user, setUser] = useState<User | null>(null);
@@ -14,7 +15,7 @@ function Home() {
         setUser(null);
         
         const res = await fetch(`https://api.github.com/users/${userName}`);
-        if (res.status == 404) {
+        if (res.status === 404) {
             setError(true)
             return;
         }
@@ -35,6 +36,14 @@ function Home() {
         if (e.key === 'Enter') {
             loadUser(userName)
         }
+    }
+
+    const loadRepos = async (userName: string) => {
+        const res = await fetch(`https://api.github.com/users/${userName}/repos`);
+        const data = await res.json();
+        console.log(data);
+        
+        
     }
 
     return (
@@ -73,6 +82,7 @@ function Home() {
                                 <span>{user.following}</span>
                             </div>
                         </div>
+                        <Link to={`repos/${user.login}`} onClick={()=>loadRepos(user.login)}>Principais repositórios</Link>
                     </div>}
                 {error && <p>Usuário não encontrado</p>}
             </main>
