@@ -2,28 +2,22 @@ import './styles.scss';
 import { BsSearch } from 'react-icons/bs';
 import { GitHub } from '../../components/github';
 import { useState, KeyboardEvent } from 'react';
+import { User } from '../../types/User';
 
 function Home() {
-
-    type User = {
-        login: string,
-        avatar_url: string,
-        location: string,
-        followers: number,
-        following: number
-    }
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Enter') {
-            loadUser(userName)
-        }
-    }
-
     const [user, setUser] = useState<User | null>(null);
     const [userName, setUserName] = useState('');
+    const [error, setError] = useState(false);
 
-    async function loadUser(userName: string) {
+    const loadUser = async (userName: string) => {
+        setError(false);
+        setUser(null);
+        
         const res = await fetch(`https://api.github.com/users/${userName}`);
+        if (res.status == 404) {
+            setError(true)
+            return;
+        }
         const data = await res.json();
 
         const { login, avatar_url, location, followers, following } = data;
@@ -35,6 +29,12 @@ function Home() {
             following
         }
         setUser(userData);
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            loadUser(userName)
+        }
     }
 
     return (
@@ -53,12 +53,14 @@ function Home() {
                             onChange={(e) => setUserName(e.target.value)}
                             onKeyDown={handleKeyDown}
                         />
-                        <button className='btn-search' onClick={() => loadUser(userName)}><BsSearch /></button>
+                        <button className='btn-search' onClick={() => loadUser(userName)}>
+                            <BsSearch />
+                        </button>
                     </div>
                 </div>
-                {user &&
+                {user && user.login &&
                     <div className='user-container'>
-                        <img src={user.avatar_url} />
+                        <img src={user.avatar_url} alt={user.login} />
                         <h3>{user.login}</h3>
                         <h3>{user.location}</h3>
                         <div className='stats'>
@@ -71,9 +73,8 @@ function Home() {
                                 <span>{user.following}</span>
                             </div>
                         </div>
-
                     </div>}
-
+                {error && <p>Usuário não encontrado</p>}
             </main>
         </div>
     );
