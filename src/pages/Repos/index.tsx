@@ -7,6 +7,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import  Loader  from '../../components/loader';
+import {format} from 'date-fns';
 
 function Repos() {
     const { username } = useParams();
@@ -33,6 +34,10 @@ function Repos() {
           setLoading(false);
     }
 
+    const formatDate = (date: Date): string => {
+        return format(date, 'MM/yyyy');
+    }
+
     return (
         <div className='repos-container'>
             <h1>Repositórios mais recentes de {username}</h1>
@@ -44,9 +49,9 @@ function Repos() {
                         <h2>{repo.name.toUpperCase()}</h2>
                         <h3><BsCodeSlash />{repo.language}</h3>
                         <h3><MdOutlineStarPurple500 color='yellow' />{repo.stargazers_count}</h3>
-                        <h3><FaCalendarAlt/>{new Date(repo.created_at).getMonth()}/{new Date(repo.created_at).getFullYear()}</h3>
+                        <h3><FaCalendarAlt/>{formatDate(new Date(repo.created_at))}</h3>
                         <a href={repo.html_url} target='_blank'>Link para repositório</a>
-                    </div>
+                    </div>  
                 ))
             : 
              !loading && <h4>Este usuário ainda não possui repositórios.</h4>}
