@@ -1,6 +1,6 @@
 import './styles.scss';
 import { BsSearch } from 'react-icons/bs';
-import { GitHub } from '../../components/github';
+import { FaGithub } from "react-icons/fa";
 import { useState, KeyboardEvent } from 'react';
 import { User } from '../../types/User';
 import { Link } from 'react-router-dom';
@@ -38,19 +38,11 @@ function Home() {
         }
     }
 
-    const loadRepos = async (userName: string) => {
-        const res = await fetch(`https://api.github.com/users/${userName}/repos`);
-        const data = await res.json();
-        console.log(data);
-        
-        
-    }
-
     return (
         <div className='home-container'>
             <header>
                 <h1>GitHub Finder</h1>
-                <GitHub />
+                <FaGithub size={30} />
             </header>
             <main>
                 <div className='form-container'>
@@ -82,7 +74,7 @@ function Home() {
                                 <span>{user.following}</span>
                             </div>
                         </div>
-                        <Link to={`repos/${user.login}`} onClick={()=>loadRepos(user.login)}>Principais repositórios</Link>
+                        <Link to={`repos/${user.login}`}>Repositórios recentes</Link>
                     </div>}
                 {error && <p>Usuário não encontrado</p>}
             </main>

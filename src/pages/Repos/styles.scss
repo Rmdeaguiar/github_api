@@ -1,3 +1,66 @@
+@import "../../styles/variables.scss";
+
 .repos-container {
-    color: yellow;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .btn-back {
+        color: $color-primary;
+        border-radius: 15px;
+        padding: 8px;
+        position: absolute;
+        right: 80px;
+        text-decoration: none;
+        background-color: lightgray;
+        opacity: 0.5;
+        cursor: pointer;
+        font-size: 12px;
+
+        &:hover {
+            transition: all 500ms;
+            opacity: 0.9;
+        }
+    }
+
+    h1 {
+        color: lightgray;
+        margin-bottom: 15px;
+    }
+
+    .repo-card {
+        background: linear-gradient(45deg, #e3e6ff, #484dd7);
+        color: $color-primary;
+        border-radius: 10px;
+        padding: 15px;
+        width: 70%;
+        margin-bottom: 15px;
+
+        h2 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }   
+
+        h3 {
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        a {
+            font-size: 12px;
+            text-decoration: none;
+            color: gray;
+            position: relative;
+
+            &:hover {
+                font-weight: 700;
+                transition: all 500ms;
+                color: $color-primary;
+            }
+        }
+    }
 }
