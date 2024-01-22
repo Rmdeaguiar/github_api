@@ -1,0 +1,18 @@
+  @keyframes balance {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .loader {
+    animation: balance 2000ms linear infinite;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.8;
+  }
+

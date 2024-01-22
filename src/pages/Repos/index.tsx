@@ -6,17 +6,19 @@ import { BsCodeSlash } from "react-icons/bs";
 import { FaCalendarAlt } from "react-icons/fa";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import { Link } from 'react-router-dom';
-
+import  Loader  from '../../components/loader';
 
 function Repos() {
     const { username } = useParams();
     const [repos, setRepos] = useState<ReposType[] | [] | null>(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         username && loadRepos(username);
     }, []);
 
     const loadRepos = async (userName: string) => {
+        setLoading(true);
         const res = await fetch(`https://api.github.com/users/${userName}/repos`);
         const data = await res.json();
 
@@ -28,11 +30,13 @@ function Repos() {
           
           console.log(orderedRepos);
           setRepos(orderedRepos)
+          setLoading(false);
     }
 
     return (
         <div className='repos-container'>
             <h1>Repositórios mais recentes de {username}</h1>
+            {loading &&<Loader/>}
             <Link to='/' className='btn-back'>Voltar para Home</Link>
             {repos != null && repos.length > 0 ? 
                 repos.map((repo: ReposType) => (
@@ -45,7 +49,7 @@ function Repos() {
                     </div>
                 ))
             : 
-            <h4>Este usuário ainda não possui repositórios.</h4>}
+             !loading && <h4>Este usuário ainda não possui repositórios.</h4>}
         </div>
     );
 }
