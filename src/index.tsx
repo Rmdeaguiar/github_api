@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { createBrowserRouter, Route, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import Repos from './pages/Repos';
 
@@ -12,12 +12,12 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path:"/",
-        element: <Home/>
+        path: "/",
+        element: <Home />
       },
       {
-        path:"/repos/:username",
-        element: <Repos/>
+        path: "/repos/:username",
+        element: <Repos />
       }
     ]
   },
@@ -28,6 +28,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );

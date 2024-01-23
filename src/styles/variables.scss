@@ -1,1 +1,10 @@
 $color-primary: rgb(18, 9, 86);
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

@@ -1,7 +1,6 @@
 @import "../../styles/variables.scss";
 
 .repos-container {
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,40 +26,60 @@
     h1 {
         color: lightgray;
         margin-bottom: 15px;
+        font-size: 20px;
     }
 
     .repo-card {
-        background: linear-gradient(45deg, #e3e6ff, #484dd7);
+        background: linear-gradient(45deg, #e3e6ff, #7175e7);
         color: $color-primary;
         border-radius: 10px;
         padding: 15px;
         width: 70%;
         margin-bottom: 15px;
+        display: flex;
+        animation-name: appear;
+        animation-duration: 2s;
 
-        h2 {
-            font-size: 16px;
-            margin-bottom: 10px;
-        }   
-
-        h3 {
-            font-weight: 500;
-            font-size: 14px;
+        .repo-left {
             display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+            flex-direction: column;
+            justify-content: center;
+            width: 50%;
+            border-right: 1px solid $color-primary;
 
-        a {
-            font-size: 12px;
-            text-decoration: none;
-            color: gray;
-            position: relative;
+            h2 {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
 
-            &:hover {
-                font-weight: 700;
-                transition: all 500ms;
-                color: $color-primary;
+            h3 {
+                font-weight: 500;
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            a {
+                font-size: 12px;
+                text-decoration: none;
+                color: gray;
+                position: relative;
+
+                &:hover {
+                    font-weight: 700;
+                    transition: all 500ms;
+                    color: $color-primary;
+                }
             }
         }
+
+        p {
+            width: 50%;
+            font-size: 12px;
+            margin-left: 15px;
+            font-weight: 500;
+        }
+
     }
 }

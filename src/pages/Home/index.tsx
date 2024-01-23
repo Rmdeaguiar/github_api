@@ -1,6 +1,5 @@
 import './styles.scss';
 import { BsSearch } from 'react-icons/bs';
-import { FaGithub } from "react-icons/fa";
 import { useState, KeyboardEvent } from 'react';
 import { User } from '../../types/User';
 import { Link } from 'react-router-dom';
@@ -40,10 +39,6 @@ function Home() {
 
     return (
         <div className='home-container'>
-            <header>
-                <h1>GitHub Finder</h1>
-                <FaGithub size={30} />
-            </header>
             <main>
                 <div className='form-container'>
                     <h3>Digite um usuário:</h3>
@@ -81,6 +76,7 @@ function Home() {
         </div>
     );
 }
+
 export default Home;
 
 
