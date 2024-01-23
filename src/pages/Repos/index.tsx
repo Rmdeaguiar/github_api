@@ -12,6 +12,7 @@ import { format } from 'date-fns';
 function Repos() {
     const { username } = useParams();
     const [repos, setRepos] = useState<ReposType[] | [] | null>(null);
+    const [quantityRepos, setQuantityRepos] = useState(0);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -22,6 +23,8 @@ function Repos() {
         setLoading(true);
         const res = await fetch(`https://api.github.com/users/${userName}/repos`);
         const data = await res.json();
+
+        setQuantityRepos(data.length);
 
         let orderedRepos = data.sort((a: ReposType, b: ReposType) => {
             return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
@@ -37,7 +40,10 @@ function Repos() {
 
     return (
         <div className='repos-container'>
-            <h1>Repositórios mais recentes de {username}</h1>
+            <div className='repos-info'>
+                <h1>Quantidade de repositórios de {username}: <h4>{quantityRepos}</h4></h1>
+                <h1>Repositórios mais recentes:</h1>
+            </div>
             {loading && <Loader />}
             <Link to='/' className='btn-back'>Voltar para Home</Link>
             {repos != null && repos.length > 0 ?
@@ -54,7 +60,7 @@ function Repos() {
                     </div>
                 ))
                 :
-                !loading && <h4>Este usuário ainda não possui repositórios.</h4>}
+                !loading && <span>Este usuário ainda não possui repositórios.</span>}
         </div>
     );
 }
