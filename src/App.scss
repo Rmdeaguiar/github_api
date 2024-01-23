@@ -1,11 +1,22 @@
-.App {
-  padding: 50px;
+@keyframes balance {
+  0% {
+    transform: rotate(30deg);
+  }
+  100% {
+    transform: rotate(45deg);
+  }
+}
+
+.container-app {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
   background-color: darkblue;
   color: darkgray;
+  padding-top: 30px;
+  min-height:100vh;
+  max-width: 100vw;
 
   header {
     position: relative;
@@ -16,6 +27,10 @@
 
     h1 {
       font-size: 28px;
+    }
+
+    .icon-git svg {
+      animation: balance 5000ms alternate 3000ms infinite;
     }
   }
 }

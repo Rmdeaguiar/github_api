@@ -50,7 +50,7 @@ function Home() {
                             onKeyDown={handleKeyDown}
                         />
                         <button className='btn-search' onClick={() => loadUser(userName)}>
-                            <BsSearch />
+                            <BsSearch size={12}/>
                         </button>
                     </div>
                 </div>
