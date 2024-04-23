@@ -2,7 +2,7 @@
 
 ## Realizado com React e TypeScript
 
-## Testes unitários feitos com Jest (em desenvolvimento)
+## Testes unitários feitos com Jest
 
 ### Funcionalidades: 
  - Busca por usuário, retornando nome, localidade e quantidade de seguidores / seguindo
