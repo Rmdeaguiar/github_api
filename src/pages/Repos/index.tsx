@@ -15,7 +15,7 @@ interface IProps {
 }
 
 function Repos({ loadRepos }: IProps) {
-    const { username } = useParams();
+    const params  = useParams();
     const [repos, setRepos] = useState<ReposType[] | [] | null>(null);
     const [quantityRepos, setQuantityRepos] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -23,8 +23,8 @@ function Repos({ loadRepos }: IProps) {
     useEffect(() => {
         (async () => {
             setLoading(true);
-            if (username) {
-                const data = await loadRepos(username);
+            if (params.username) {
+                const data = await loadRepos(params.username);
                 setQuantityRepos(data.length);
                 let orderedRepos = data.sort((a: ReposType, b: ReposType) => {
                     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
@@ -44,7 +44,7 @@ function Repos({ loadRepos }: IProps) {
         <div className='repos-container container-app'>
             <Header/>
             <div className='repos-info'>
-                <h1>Quantidade de repositórios de {username}: </h1>
+                <h1>Quantidade de repositórios de {params.username}: </h1>
                 <h4>{quantityRepos}</h4>
                 <h2>Repositórios mais recentes:</h2>
             </div>

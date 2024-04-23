@@ -8,7 +8,6 @@ export default function MainRoutes() {
         <Routes>
             <Route path="" element={<Home />} />
             <Route path="/repos/:username" element={<Repos loadRepos={loadRepos} />} />
-
             <Route path="*" element={<h1>404 Page Not Found</h1>} />
         </Routes>
     )

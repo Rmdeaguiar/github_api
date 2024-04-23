@@ -2,16 +2,17 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import '@testing-library/jest-dom/';
 import Repos from ".";
 import { BrowserRouter } from "react-router-dom";
+import { loadRepos } from "../../services/ReposService";
 
-
-describe("Test the Repos page", () => {
-    const mockFetchRepos = jest.fn().mockResolvedValue([
+const mockFn = jest.fn(loadRepos)
+const mockFetchReposFn = mockFn.mockImplementation(async () => {
+    return [
         {
-            name: 'Primeiro Projeto',
+            name: "Primeiro Projeto",
             html_url: "Imagem",
             language: "React Js",
             stargazers_count: 10,
-            created_at: "01/2024",
+            created_at: "2024-04-08T20:09:13Z",
             description: "Repositório 1"
         },
         {
@@ -19,37 +20,48 @@ describe("Test the Repos page", () => {
             html_url: "Imagem",
             language: "React Js",
             stargazers_count: 10,
-            created_at: "02/2024",
+            created_at: "2024-04-08T20:09:13Z",
             description: "Repositório 2"
         }
-    ]);
+    ]
+});
 
-    test("Should have a title 'Quantidade de repositórios', and a text telling about the repositories", async () => {
+
+describe("Test the Repos page", () => {
+    jest.mock("react-router-dom", () => {
+        return {
+            useParams: () => ({
+                username: 'username'
+            })
+        }
+    })
+
+    test("Should have a title 'Quantidade de repositórios'", async () => {
         render(
             <BrowserRouter>
-                <Repos loadRepos={mockFetchRepos} />
+                <Repos loadRepos={mockFetchReposFn} />
             </BrowserRouter>
         );
 
         const title = await screen.findByRole("heading", {
             name: "Quantidade de repositórios de :"
         });
-    
+
         expect(title).toBeInTheDocument();
-
-        const text = await screen.findByText("Este usuário ainda não possui repositórios.");
-        expect(text).toBeInTheDocument();
-
     })
 
-    test("Should have 2 repositories in the page", async () => {
+    test("Should have two texts about repositories (recent and quantity) in the page", async () => {
         render(
             <BrowserRouter>
-                <Repos loadRepos={mockFetchRepos} />
+                <Repos loadRepos={mockFetchReposFn} />
             </BrowserRouter>
         );
 
-        // const firstProject = await screen.findByText("Primeiro Projeto");
-        // expect(firstProject).toBeInTheDocument();
-    })
+        const recentRepositories = await screen.findByText("Repositórios mais recentes:");
+        expect(recentRepositories).toBeInTheDocument();
+
+        const infoRepositories = await screen.findByText("Este usuário ainda não possui repositórios.");
+        expect(infoRepositories).toBeInTheDocument();
+
+    });
 })
