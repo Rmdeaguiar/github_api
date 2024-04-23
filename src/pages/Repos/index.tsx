@@ -35,20 +35,6 @@ function Repos({ loadRepos }: IProps) {
         })()
     }, []);
 
-    // const loadRepos = async (userName: string) => {
-    //     setLoading(true);
-    //     const res = await fetch(`https://api.github.com/users/${userName}/repos`);
-    //     const data = await res.json();
-
-    //     setQuantityRepos(data.length);
-
-    //     let orderedRepos = data.sort((a: ReposType, b: ReposType) => {
-    //         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-    //     }).slice(0, 3);
-
-    //     setRepos(orderedRepos)
-    //     setLoading(false);
-    // }
 
     const formatDate = (date: Date): string => {
         return format(date, 'MM/yyyy');
