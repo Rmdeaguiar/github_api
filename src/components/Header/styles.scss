@@ -1,0 +1,29 @@
+@keyframes balance {
+    0% {
+      transform: rotate(30deg);
+    }
+    100% {
+      transform: rotate(45deg);
+    }
+  }
+  
+  .container-header {
+    display: flex;
+
+  
+    header {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+  
+      h1 {
+        font-size: 28px;
+      }
+  
+      .icon-git svg {
+        animation: balance 5000ms alternate 3000ms infinite;
+      }
+    }
+  }
