@@ -3,6 +3,7 @@ import { BsSearch } from 'react-icons/bs';
 import { useState, KeyboardEvent } from 'react';
 import { User } from '../../types/User';
 import { Link } from 'react-router-dom';
+import Header from '../../components/Header';
 
 function Home() {
     const [user, setUser] = useState<User | null>(null);
@@ -38,7 +39,8 @@ function Home() {
     }
 
     return (
-        <div className='home-container'>
+        <div className='home-container container-app'>
+            <Header/>
             <main>
                 <div className='form-container'>
                     <h3>Digite um usuário:</h3>

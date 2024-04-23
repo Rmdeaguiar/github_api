@@ -6,43 +6,61 @@ import { BsCodeSlash } from "react-icons/bs";
 import { FaCalendarAlt } from "react-icons/fa";
 import { MdOutlineStarPurple500 } from "react-icons/md";
 import { Link } from 'react-router-dom';
-import Loader from '../../components/Loader/loader';
+import Loader from '../../components/Loader';
 import { format } from 'date-fns';
+import Header from '../../components/Header';
 
-function Repos() {
+interface IProps {
+    loadRepos: (username: string) => Promise<ReposType[]>;
+}
+
+function Repos({ loadRepos }: IProps) {
     const { username } = useParams();
     const [repos, setRepos] = useState<ReposType[] | [] | null>(null);
     const [quantityRepos, setQuantityRepos] = useState(0);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        username && loadRepos(username);
+        (async () => {
+            setLoading(true);
+            if (username) {
+                const data = await loadRepos(username);
+                setQuantityRepos(data.length);
+                let orderedRepos = data.sort((a: ReposType, b: ReposType) => {
+                    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+                }).slice(0, 3);
+                setRepos(orderedRepos)
+            }
+            setLoading(false);
+        })()
     }, []);
 
-    const loadRepos = async (userName: string) => {
-        setLoading(true);
-        const res = await fetch(`https://api.github.com/users/${userName}/repos`);
-        const data = await res.json();
+    // const loadRepos = async (userName: string) => {
+    //     setLoading(true);
+    //     const res = await fetch(`https://api.github.com/users/${userName}/repos`);
+    //     const data = await res.json();
 
-        setQuantityRepos(data.length);
+    //     setQuantityRepos(data.length);
 
-        let orderedRepos = data.sort((a: ReposType, b: ReposType) => {
-            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-        }).slice(0, 3);
+    //     let orderedRepos = data.sort((a: ReposType, b: ReposType) => {
+    //         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    //     }).slice(0, 3);
 
-        setRepos(orderedRepos)
-        setLoading(false);
-    }
+    //     setRepos(orderedRepos)
+    //     setLoading(false);
+    // }
 
     const formatDate = (date: Date): string => {
         return format(date, 'MM/yyyy');
     }
 
     return (
-        <div className='repos-container'>
+        <div className='repos-container container-app'>
+            <Header/>
             <div className='repos-info'>
-                <h1>Quantidade de repositórios de {username}: <h4>{quantityRepos}</h4></h1>
-                <h1>Repositórios mais recentes:</h1>
+                <h1>Quantidade de repositórios de {username}: </h1>
+                <h4>{quantityRepos}</h4>
+                <h2>Repositórios mais recentes:</h2>
             </div>
             {loading && <Loader />}
             <Link to='/' className='btn-back'>Voltar para Home</Link>
